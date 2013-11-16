@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  references: 
+  sale_price: 9.99
+  initial_payment: 9.99
+  start_at: 2013-11-16
+  frequency: 1
+  grace_period_type: MyString
+  total_days: 1
+  payments_count: 1
+  annual_interest_rate: 9.99
+  inflation_rate: 9.99
+  discount_rate: 9.99
+
+two:
+  references: 
+  sale_price: 9.99
+  initial_payment: 9.99
+  start_at: 2013-11-16
+  frequency: 1
+  grace_period_type: MyString
+  total_days: 1
+  payments_count: 1
+  annual_interest_rate: 9.99
+  inflation_rate: 9.99
+  discount_rate: 9.99

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  references: 
+  payment_index: 1
+  start_at: 2013-11-16
+  annual_interest_rate: 9.99
+  periodic_interest_rate: 9.99
+  inflation_rate: 9.99
+  periodic_inflation_rate: 9.99
+  grace_period_type: MyString
+  opening_balance: 9.99
+  interest: 9.99
+  amortization: 9.99
+  quota: 9.99
+  final_balance: 9.99
+  cash_flow: 9.99
+
+two:
+  references: 
+  payment_index: 1
+  start_at: 2013-11-16
+  annual_interest_rate: 9.99
+  periodic_interest_rate: 9.99
+  inflation_rate: 9.99
+  periodic_inflation_rate: 9.99
+  grace_period_type: MyString
+  opening_balance: 9.99
+  interest: 9.99
+  amortization: 9.99
+  quota: 9.99
+  final_balance: 9.99
+  cash_flow: 9.99
