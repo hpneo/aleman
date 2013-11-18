@@ -28,4 +28,6 @@ gem 'jquery-ui-rails'
 
 gem 'inherited_resources'
 
+gem 'simple_form'
+
 gem 'devise'

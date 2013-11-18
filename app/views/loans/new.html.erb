@@ -1,0 +1,13 @@
+<%= simple_form_for(@loan) do |f| %>
+  <%= f.input :sale_price, label: 'Precio de venta' %>
+  <%= f.input :initial_payment, label: 'Costo inicial' %>
+  <%= f.input :start_at, label: 'Fecha de inicio' %>
+  <%= f.input :total_days, label: 'Tiempo' %>
+  <%= f.input :frequency, label: 'Frecuencia' %>
+  <%= f.input :grace_period_type, label: 'Periodo de gracia' %>
+  <%= f.input :annual_interest_rate, label: 'TEA (%)' %>
+  <%= f.input :inflation_rate, label: 'Inflación anual (%)' %>
+  <%= f.input :discount_rate, label: 'Tasa de descuento (%)' %>
+
+  <%= f.input :amount_payable, label: 'Monto a pagar' %>
+<% end %>
