@@ -11,56 +11,57 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118010637) do
+ActiveRecord::Schema.define(:version => 20131118050538) do
 
   create_table "initial_costs", :force => true do |t|
     t.integer  "loan_id"
     t.string   "name"
-    t.decimal  "amount",     :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "amount",     :precision => 12, :scale => 4, :default => 0.0
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
   end
 
   create_table "loans", :force => true do |t|
     t.integer  "user_id"
-    t.decimal  "sale_price",           :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "initial_payment",      :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "sale_price",            :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "initial_payment",       :precision => 12, :scale => 4, :default => 0.0
     t.date     "start_at"
     t.integer  "frequency"
     t.string   "grace_period_type"
     t.integer  "total_days"
     t.integer  "payments_count"
-    t.decimal  "annual_interest_rate", :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "inflation_rate",       :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "discount_rate",        :precision => 10, :scale => 2, :default => 0.0
-    t.datetime "created_at",                                                           :null => false
-    t.datetime "updated_at",                                                           :null => false
-    t.decimal  "amount_payable",       :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "annual_interest_rate",  :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "annual_inflation_rate", :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "discount_rate",         :precision => 12, :scale => 4, :default => 0.0
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
+    t.decimal  "amount_payable",        :precision => 12, :scale => 4, :default => 0.0
   end
 
   create_table "payments", :force => true do |t|
     t.integer  "loan_id"
     t.integer  "payment_index"
     t.date     "start_at"
-    t.decimal  "annual_interest_rate",    :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "periodic_interest_rate",  :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "inflation_rate",          :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "periodic_inflation_rate", :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "annual_interest_rate",    :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "periodic_interest_rate",  :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "annual_inflation_rate",   :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "periodic_inflation_rate", :precision => 12, :scale => 4, :default => 0.0
     t.string   "grace_period_type"
-    t.decimal  "opening_balance",         :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "interest",                :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "amortization",            :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "quota",                   :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "final_balance",           :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "cash_flow",               :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "opening_balance",         :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "interest",                :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "amortization",            :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "quota",                   :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "final_balance",           :precision => 12, :scale => 4, :default => 0.0
+    t.decimal  "cash_flow",               :precision => 12, :scale => 4, :default => 0.0
     t.datetime "created_at",                                                              :null => false
     t.datetime "updated_at",                                                              :null => false
+    t.decimal  "prepayment",              :precision => 12, :scale => 4, :default => 0.0
   end
 
   create_table "recurrent_costs", :force => true do |t|
     t.integer  "loan_id"
     t.string   "name"
-    t.decimal  "amount",     :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "amount",     :precision => 12, :scale => 4, :default => 0.0
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
   end
