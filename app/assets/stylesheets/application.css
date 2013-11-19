@@ -11,6 +11,7 @@
  *= require normalize
  *= require buttons
  *= require layout
+ *= require forms
+ *= require loans
  *= require home
- *= require devise
  */

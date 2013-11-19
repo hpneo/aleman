@@ -3,7 +3,11 @@
     <h1>Maneja los préstamos que realizas, de forma profesional</h1>
     <p>Obtén al detalle las cuotas de los préstamos que realizas.</p>
     <p>Edita las cuotas una a una y ofrece mayor flexibilidad en los pagos.</p>
-    <a href="/sign_in" class="button nephritis">Entra</a>
+    <% if user_signed_in? %>
+      <a href="/loans" class="button nephritis">Ir a mis préstamos</a>
+    <% else %>
+      <a href="/sign_in" class="button nephritis">Inicia sesión</a>
+    <% end %>
   </div>
   <div class="float right">
     <img src="/assets/cash-register-icon.png" alt="" />

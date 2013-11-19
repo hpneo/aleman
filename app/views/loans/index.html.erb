@@ -1,0 +1,11 @@
+<h1>Mis préstamos</h1>
+
+<% if @loans.empty? %>
+  <div class="message-container">
+    <p class="message">
+      Aún no tienes préstamos registrados.
+    </p>
+    <a href="/loans/new" class="button belize-hole">Registrar préstamo</a>
+  </div>
+<% else %>
+<% end %>

@@ -2,21 +2,21 @@
   <h1>Entrar</h1>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { id: 'sign-in-form', class: 'devise-form' }) do |f| %>
-    <div class="inputs">
+    <div class="input">
       <%= f.label :email, 'Correo electrónico' %>
       <%= f.email_field :email, :autofocus => true %>
       </div>
 
-    <div class="inputs">
+    <div class="input">
       <%= f.label :password, 'Contraseña' %>
       <%= f.password_field :password %>
     </div>
 
     <% if devise_mapping.rememberable? -%>
-      <div class="inputs"><%= f.check_box :remember_me %> <%= f.label :remember_me, 'Recuérdame' %></div>
+      <div class="input"><%= f.check_box :remember_me %> <%= f.label :remember_me, 'Recuérdame' %></div>
     <% end -%>
 
-    <div class="inputs"><%= f.submit "Entrar", class: 'button belize-hole' %></div>
+    <div class="input"><%= f.submit "Entrar", class: 'button belize-hole' %></div>
   <% end %>
 
   <%= render "devise/shared/links" %>
