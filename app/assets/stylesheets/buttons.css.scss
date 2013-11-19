@@ -1,0 +1,276 @@
+.button {
+  display: inline-block;
+  background: #ecf0f1;
+  text-decoration: none;
+  padding: 0.6em 1.8em;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 2px;
+  color: #333333;
+
+  transition: background 0.35s;
+  -webkit-transition: background 0.35s;
+  -moz-transition: background 0.35s;
+  -ms-transition: background 0.35s;
+  -o-transition: background 0.35s;
+
+  &.turquoise {
+    background: #1abc9c;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#1abc9c, 5%);
+    }
+
+    &:active {
+      background: darken(#1abc9c, 5%);
+    }
+  }
+
+  &.emerland {
+    background: #2ecc71;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#2ecc71, 5%);
+    }
+
+    &:active {
+      background: darken(#2ecc71, 5%);
+    }
+  }
+
+  &.peter-river {
+    background: #3498db;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#3498db, 5%);
+    }
+
+    &:active {
+      background: darken(#3498db, 5%);
+    }
+  }
+
+  &.amethyst {
+    background: #9b59b6;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#9b59b6, 5%);
+    }
+
+    &:active {
+      background: darken(#9b59b6, 5%);
+    }
+  }
+
+  &.wet-asphalt {
+    background: #34495e;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#34495e, 5%);
+    }
+
+    &:active {
+      background: darken(#34495e, 5%);
+    }
+  }
+
+  &.green-sea {
+    background: #16a085;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#16a085, 5%);
+    }
+
+    &:active {
+      background: darken(#16a085, 5%);
+    }
+  }
+
+  &.nephritis {
+    background: #27ae60;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#27ae60, 5%);
+    }
+
+    &:active {
+      background: darken(#27ae60, 5%);
+    }
+  }
+
+  &.belize-hole {
+    background: #2980b9;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#2980b9, 5%);
+    }
+
+    &:active {
+      background: darken(#2980b9, 5%);
+    }
+  }
+
+  &.wisteria {
+    background: #8e44ad;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#8e44ad, 5%);
+    }
+
+    &:active {
+      background: darken(#8e44ad, 5%);
+    }
+  }
+
+  &.midnight-blue {
+    background: #2c3e50;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#2c3e50, 5%);
+    }
+
+    &:active {
+      background: darken(#2c3e50, 5%);
+    }
+  }
+
+  &.sun-flower {
+    background: #f1c40f;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#f1c40f, 5%);
+    }
+
+    &:active {
+      background: darken(#f1c40f, 5%);
+    }
+  }
+
+  &.carrot {
+    background: #e67e22;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#e67e22, 5%);
+    }
+
+    &:active {
+      background: darken(#e67e22, 5%);
+    }
+  }
+
+  &.alizarin {
+    background: #e74c3c;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#e74c3c, 5%);
+    }
+
+    &:active {
+      background: darken(#e74c3c, 5%);
+    }
+  }
+
+  &.clouds {
+    background: #ecf0f1;
+    color: #333333;
+
+    &:hover {
+      background: lighten(#ecf0f1, 5%);
+    }
+
+    &:active {
+      background: darken(#ecf0f1, 5%);
+    }
+  }
+
+  &.concrete {
+    background: #95a5a6;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#95a5a6, 5%);
+    }
+
+    &:active {
+      background: darken(#95a5a6, 5%);
+    }
+  }
+
+  &.orange {
+    background: #f39c12;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#f39c12, 5%);
+    }
+
+    &:active {
+      background: darken(#f39c12, 5%);
+    }
+  }
+
+  &.pumpkin {
+    background: #d35400;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#d35400, 5%);
+    }
+
+    &:active {
+      background: darken(#d35400, 5%);
+    }
+  }
+
+  &.pomegranate {
+    background: #c0392b;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#c0392b, 5%);
+    }
+
+    &:active {
+      background: darken(#c0392b, 5%);
+    }
+  }
+
+  &.silver {
+    background: #bdc3c7;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#bdc3c7, 5%);
+    }
+
+    &:active {
+      background: darken(#bdc3c7, 5%);
+    }
+  }
+
+  &.asbestos {
+    background: #7f8c8d;
+    color: #ecf0f1;
+
+    &:hover {
+      background: lighten(#7f8c8d, 5%);
+    }
+
+    &:active {
+      background: darken(#7f8c8d, 5%);
+    }
+  }
+}

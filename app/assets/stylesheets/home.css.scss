@@ -1,3 +1,27 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#main {
+  font-size: 1.4em;
+
+  #splash {
+    display: block;
+    width: 100%;
+    background: #fcfcfc;
+    padding: 40px;
+    margin: 40px auto;
+    font-size: 1.1em;
+    color: #2c3e50;
+    border-radius: 2px;
+    box-shadow: 0 0 10px #bdc3c7;
+
+    #splash-text {
+      width: 550px;
+    }
+
+    h1 {
+      font-weight: 400;
+    }
+
+    p {
+      font-size: 1.2em;
+    }
+  }
+}
