@@ -1,0 +1,119 @@
+<%= simple_form_for(@loan, html: { class: 'loan-form' }) do |f| %>
+  <div class="column" id="column-1">
+    <%= f.input :sale_price, label: 'Precio de venta' %>
+    <%= f.input :initial_payment, label: 'Costo inicial' %>
+
+    <%= f.input :amount_payable, label: 'Monto a pagar', input_html: { disabled: true } %>
+
+    <%= f.input :annual_interest_rate, label: 'TEA (%)' %>
+    <%= f.input :annual_inflation_rate, label: 'Inflación anual (%)' %>
+    <%= f.input :discount_rate, label: 'Tasa de descuento (%)' %>
+  </div>
+  <div class="column" id="column-2">
+    <%= f.input :start_at, label: 'Fecha de inicio', use_short_month: true %>
+    <div class="input numeric optional loan_total_time">
+      <label class="numeric optional" for="loan_total_time">Tiempo</label><%= f.input_field :total_time, as: :decimal, type: :number, step: :any, value: 1 %>
+      <%= f.input_field :total_time_type, collection: Loan::TIME_TYPES.invert, include_blank: false %>
+    </div>
+    <%= f.input :frequency, label: 'Frecuencia', collection: Loan::FREQUENCIES.invert, include_blank: false %>
+    <%= f.input :grace_period_type, label: 'Plazo de gracia', collection: Loan::GRACE_PERIODS.invert, include_blank: false %>
+
+    <%= f.input :payments_count, label: 'Número de cuotas', input_html: { disabled: true } %>
+
+    <%= f.submit 'Calcular', class: 'button belize-hole' %>
+  </div>
+  <div class="column" id="column-3">
+    <div class="tab-container">
+      <nav class="tabs">
+        <a href="#">Gastos Iniciales</a>
+        <a href="#">Gastos Periódicos</a>
+      </nav>
+      <div class="tab-panel">
+        <table class="table table-striped table-condensed" id="loan-initial-costs">
+          <thead>
+            <tr>
+              <th>Denominación</th>
+              <th>Monto</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.simple_fields_for :initial_costs do |initial_cost_form| %>
+              <tr>
+                <td><%= initial_cost_form.input :name, label: false, collection: InitialCost::NAMES.invert %></td>
+                <td><%= initial_cost_form.input :amount, label: false %></td>
+                <td></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-panel">
+        <table class="table table-striped table-condensed" id="loan-recurrent-costs">
+          <thead>
+            <tr>
+              <th>Denominación</th>
+              <th>Monto</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= f.simple_fields_for :recurrent_costs do |recurrent_cost_form| %>
+              <tr>
+                <td><%= recurrent_cost_form.input :name, label: false, collection: RecurrentCost::NAMES.invert %></td>
+                <td><%= recurrent_cost_form.input :amount, label: false %></td>
+                <td></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<table class="table table-striped" id="loan-payments">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Fecha</th>
+      <th>TEA</th>
+      <th>TEP</th>
+      <th>IA</th>
+      <th>IP</th>
+      <th>Plazo de gracia</th>
+      <th>Saldo inicial</th>
+      <th>Interés</th>
+      <th>Amortización</th>
+      <th>Cuota</th>
+      <th>Saldo final</th>
+      <th>Flujo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @loan.payments.each do |payment| %>
+      <tr>
+        <th><%= payment.payment_index %></th>
+        <th><%= payment.start_at %></th>
+        <th><%= payment.annual_interest_rate %></th>
+        <th><%= payment.periodic_interest_rate %></th>
+        <th><%= payment.annual_inflation_rate %></th>
+        <th><%= payment.periodic_inflation_rate %></th>
+        <th><%= Loan::GRACE_PERIODS[payment.grace_period_type.to_sym] %></th>
+        <th><%= payment.opening_balance %></th>
+        <th><%= payment.interest %></th>
+        <th><%= payment.amortization %></th>
+        <th><%= payment.quota %></th>
+        <th><%= payment.final_balance %></th>
+        <th><%= payment.cash_flow %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function() {
+    var costs_tabs = new Tabs($('.tab-container'));
+  });
+</script>

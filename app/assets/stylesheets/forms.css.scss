@@ -10,7 +10,9 @@ form {
 
   input, select {
     display: inline-block;
+    background: #ffffff;
     border: solid 1px #bdc3c7;
+    border-radius: 2px;
     padding: 5px;
   }
 }

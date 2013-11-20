@@ -1,10 +1,28 @@
-#loans-new {
+#loans-new, #loans-index, #loans-show {
   #main .wrapper {
     padding: 20px;
     background: #ffffff;
+    box-shadow: 0 0 10px #bdc3c7;
 
     h1 {
       font-weight: 400;
+    }
+  }
+
+  #loan-initial-costs,
+  #loan-recurrent-costs {
+    .input {
+      margin: 0;
+    }
+
+    select, input {
+      font-size: 0.9em;
+      padding: 2px;
+      width: 100%;
+    }
+
+    input {
+      width: 70px;
     }
   }
 }

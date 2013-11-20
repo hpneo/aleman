@@ -2,6 +2,7 @@
 class Loan < ActiveRecord::Base
   attr_accessible :amount_payable, :annual_inflation_rate, :annual_interest_rate, :discount_rate, :frequency
   attr_accessible :grace_period_type, :initial_payment, :payments_count, :sale_price, :start_at, :total_days, :user_id
+  attr_accessible :total_time, :total_time_type, :initial_costs_attributes, :recurrent_costs_attributes
 
   attr_accessor :total_time, :total_time_type
 
@@ -20,9 +21,9 @@ class Loan < ActiveRecord::Base
   }
 
   GRACE_PERIODS = {
-    s: 'Sin periodo',
-    t: 'Periodo total',
-    p: 'Periodo parcial'
+    s: 'Sin plazo',
+    t: 'Plazo total',
+    p: 'Plazo parcial'
   }
 
   DAYS_PER_YEAR = 360
@@ -35,21 +36,23 @@ class Loan < ActiveRecord::Base
   accepts_nested_attributes_for :initial_costs
   accepts_nested_attributes_for :recurrent_costs
 
-  before_create :set_up_attributes
-  after_create :set_up_payments_count
+  before_update :set_up_attributes
+  before_update :set_up_payments_count
+  after_update :set_up_payments
 
   def set_up_attributes
-    self.total_days = self.total_time * self.total_time_type
+    self.total_days = self.total_time.to_i * self.total_time_type.to_i
   end
 
   def set_up_payments_count
     self.amount_payable = self.sale_price - self.initial_payment + self.total_initial_costs
 
     self.payments_count = self.payments_per_year * self.years_count
-    self.save
   end
 
   def set_up_payments
+    self.payments.destroy_all
+
     1.upto(self.payments_count) do |i|
       self.payments.create({
         payment_index: i,

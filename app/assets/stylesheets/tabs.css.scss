@@ -1,0 +1,35 @@
+.tab-container {
+  display: block;
+  overflow: hidden;
+
+  .tabs {
+    display: block;
+    overflow: hidden;
+    clear: both;
+    margin-bottom: 5px;
+
+    a {
+      display: inline-block;
+      padding: 5px;
+      border-radius: 2px;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    a.current {
+      font-weight: 900;
+      background: #3498db;
+      color: #fcfcfc;
+    }
+  }
+
+  .tab-panel {
+    display: none;
+
+    &.current {
+      display: block;
+    }
+  }
+}

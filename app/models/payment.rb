@@ -1,7 +1,7 @@
 class Payment < ActiveRecord::Base
   attr_accessible :amortization, :annual_inflation_rate, :annual_interest_rate, :cash_flow, :final_balance
   attr_accessible :grace_period_type, :interest, :opening_balance, :payment_index, :periodic_inflation_rate
-  attr_accessible :periodic_interest_rate, :prepayment, :quota, :start_at, :loan_id
+  attr_accessible :periodic_interest_rate, :prepayment, :quota, :start_at, :d_id
 
   belongs_to :loan
 
@@ -11,9 +11,11 @@ class Payment < ActiveRecord::Base
     self.payment_index == 1
   end
 
-  def previous_payment
+  def previous_payment_final_balance
     unless self.is_first_payment?
-      Payment.where(loan_id: self.loan_id, payment_index: self.payment_index - 1).first
+      Payment.where(loan_id: self.loan_id, payment_index: self.payment_index - 1).select(:final_balance).first.final_balance
+    else
+      0.0
     end
   end
 
@@ -60,7 +62,7 @@ class Payment < ActiveRecord::Base
     if self.is_first_payment?
       self.opening_balance = self.loan.amount_payable
     else
-      self.previous_payment.final_balance
+      self.previous_payment_final_balance
     end
 
     self.interest = -self.indexed_opening_balance * self.periodic_interest_rate
