@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118050538) do
+ActiveRecord::Schema.define(:version => 20131120232328) do
 
   create_table "initial_costs", :force => true do |t|
     t.integer  "loan_id"
@@ -29,13 +29,14 @@ ActiveRecord::Schema.define(:version => 20131118050538) do
     t.integer  "frequency"
     t.string   "grace_period_type"
     t.integer  "total_days"
-    t.integer  "payments_count"
     t.decimal  "annual_interest_rate",  :precision => 14, :scale => 7, :default => 0.0
     t.decimal  "annual_inflation_rate", :precision => 14, :scale => 7, :default => 0.0
     t.decimal  "discount_rate",         :precision => 14, :scale => 7, :default => 0.0
     t.datetime "created_at",                                                            :null => false
     t.datetime "updated_at",                                                            :null => false
     t.decimal  "amount_payable",        :precision => 14, :scale => 7, :default => 0.0
+    t.integer  "total_time"
+    t.integer  "total_time_type"
   end
 
   create_table "payments", :force => true do |t|

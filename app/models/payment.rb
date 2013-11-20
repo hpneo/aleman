@@ -62,10 +62,11 @@ class Payment < ActiveRecord::Base
     if self.is_first_payment?
       self.opening_balance = self.loan.amount_payable
     else
-      self.previous_payment_final_balance
+      self.opening_balance = self.previous_payment_final_balance
     end
 
     self.interest = -self.indexed_opening_balance * self.periodic_interest_rate
+    self.start_at = self.loan.start_at + (self.payment_index * self.loan.frequency).days
 
     case self.grace_period_type
     when 't'
@@ -78,6 +79,8 @@ class Payment < ActiveRecord::Base
       self.final_balance = self.indexed_opening_balance + self.amortization + self.prepayment
     when 's'
       self.amortization = -self.indexed_opening_balance / (self.loan.payments_count - self.payment_index + 1)
+
+      #Interes+Amort+SegDes
       self.quota = self.interest + self.amortization + self.credit_life_insurance
       self.final_balance = self.indexed_opening_balance + self.amortization + self.prepayment
     end

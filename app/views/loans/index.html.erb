@@ -8,4 +8,28 @@
     <a href="/loans/new" class="button belize-hole">Registrar préstamo</a>
   </div>
 <% else %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Precio de venta</th>
+        <th>Monto a pagar</th>
+        <th>Fecha de inicio</th>
+        <th>Tiempo</th>
+        <th>Número de cuotas</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @loans.each do |loan| %>
+        <tr>
+          <td><%= loan.sale_price %></td>
+          <td><%= loan.amount_payable %></td>
+          <td><%= loan.start_at %></td>
+          <td><%= loan.total_time %> <%= Loan::TIME_TYPES[loan.total_time_type] %></td>
+          <td><%= loan.payments_count %></td>
+          <td><a href="<%= loan_path(loan) %>">Ver</a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

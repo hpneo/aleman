@@ -1,9 +1,9 @@
 <%= simple_form_for(@loan, html: { class: 'loan-form' }) do |f| %>
   <div class="column" id="column-1">
-    <%= f.input :sale_price, label: 'Precio de venta' %>
-    <%= f.input :initial_payment, label: 'Costo inicial' %>
+    <%= f.input :sale_price, label: 'Precio de venta', input_html: { value: number_with_precision(@loan.sale_price, precision: 2), min: 0.00, step: 0.01 } %>
+    <%= f.input :initial_payment, label: 'Costo inicial', input_html: { value: number_with_precision(@loan.initial_payment, precision: 2), min: 0.00 } %>
 
-    <%= f.input :amount_payable, label: 'Monto a pagar', input_html: { disabled: true } %>
+    <%= f.input :amount_payable, label: 'Monto a pagar', input_html: { disabled: true, readonly: true, value: number_with_precision(@loan.amount_payable, precision: 2), min: 0.00 } %>
 
     <%= f.input :annual_interest_rate, label: 'TEA (%)' %>
     <%= f.input :annual_inflation_rate, label: 'Inflación anual (%)' %>
@@ -12,13 +12,13 @@
   <div class="column" id="column-2">
     <%= f.input :start_at, label: 'Fecha de inicio', use_short_month: true %>
     <div class="input numeric optional loan_total_time">
-      <label class="numeric optional" for="loan_total_time">Tiempo</label><%= f.input_field :total_time, as: :decimal, type: :number, step: :any, value: 1 %>
+      <label class="numeric optional" for="loan_total_time">Tiempo</label><%= f.input_field :total_time, as: :decimal, type: :number, step: :any %>
       <%= f.input_field :total_time_type, collection: Loan::TIME_TYPES.invert, include_blank: false %>
     </div>
     <%= f.input :frequency, label: 'Frecuencia', collection: Loan::FREQUENCIES.invert, include_blank: false %>
     <%= f.input :grace_period_type, label: 'Plazo de gracia', collection: Loan::GRACE_PERIODS.invert, include_blank: false %>
 
-    <%= f.input :payments_count, label: 'Número de cuotas', input_html: { disabled: true } %>
+    <%= f.input :payments_count, label: 'Número de cuotas', as: :numeric, input_html: { disabled: true, readonly: true } %>
 
     <%= f.submit 'Calcular', class: 'button belize-hole' %>
   </div>
@@ -78,10 +78,10 @@
     <tr>
       <th>#</th>
       <th>Fecha</th>
-      <th>TEA</th>
-      <th>TEP</th>
-      <th>IA</th>
-      <th>IP</th>
+      <th><abbr title="Tasa efectiva anual">TEA</abbr></th>
+      <th><abbr title="Tasa efectiva del periodo">TEP</abbr></th>
+      <th><abbr title="Inflación anualizada">IA</abbr></th>
+      <th><abbr title="Inflación del periodo">IP</abbr></th>
       <th>Plazo de gracia</th>
       <th>Saldo inicial</th>
       <th>Interés</th>
@@ -96,17 +96,17 @@
       <tr>
         <th><%= payment.payment_index %></th>
         <th><%= payment.start_at %></th>
-        <th><%= payment.annual_interest_rate %></th>
-        <th><%= payment.periodic_interest_rate %></th>
-        <th><%= payment.annual_inflation_rate %></th>
-        <th><%= payment.periodic_inflation_rate %></th>
+        <th><%= number_to_percentage(payment.annual_interest_rate * 100, significant: true) %></th>
+        <th><%= number_to_percentage(payment.periodic_interest_rate * 100, significant: true) %></th>
+        <th><%= number_to_percentage(payment.annual_inflation_rate * 100, significant: true) %></th>
+        <th><%= number_to_percentage(payment.periodic_inflation_rate * 100, significant: true) %></th>
         <th><%= Loan::GRACE_PERIODS[payment.grace_period_type.to_sym] %></th>
-        <th><%= payment.opening_balance %></th>
-        <th><%= payment.interest %></th>
-        <th><%= payment.amortization %></th>
-        <th><%= payment.quota %></th>
-        <th><%= payment.final_balance %></th>
-        <th><%= payment.cash_flow %></th>
+        <th><%= number_to_currency(payment.opening_balance) %></th>
+        <th><%= number_to_currency(payment.interest) %></th>
+        <th><%= number_to_currency(payment.amortization) %></th>
+        <th><%= number_to_currency(payment.quota) %></th>
+        <th><%= number_to_currency(payment.final_balance) %></th>
+        <th><%= number_to_currency(payment.cash_flow) %></th>
       </tr>
     <% end %>
   </tbody>
