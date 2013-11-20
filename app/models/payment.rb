@@ -56,8 +56,8 @@ class Payment < ActiveRecord::Base
   end
 
   def set_up_attributes
-    self.periodic_interest_rate = ((self.annual_interest_rate + 1) ** (self.loan.frequency.to_f / Loan::DAYS_PER_YEAR)) - 1
-    self.periodic_inflation_rate = ((self.annual_inflation_rate + 1) ** (self.loan.frequency.to_f / Loan::DAYS_PER_YEAR)) - 1
+    self.periodic_interest_rate = ((self.annual_interest_rate + 1) ** (self.loan.frequency.to_d / Loan::DAYS_PER_YEAR)) - 1
+    self.periodic_inflation_rate = ((self.annual_inflation_rate + 1) ** (self.loan.frequency.to_d / Loan::DAYS_PER_YEAR)) - 1
 
     if self.is_first_payment?
       self.opening_balance = self.loan.amount_payable
