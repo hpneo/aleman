@@ -34,6 +34,13 @@ class Loan < ActiveRecord::Base
   accepts_nested_attributes_for :initial_costs
   accepts_nested_attributes_for :recurrent_costs
 
+  validates :sale_price, numericality: { greater_than: 0.0 }, presence: true
+  validates :initial_payment, numericality: { greater_than_or_equal_to: 0.0 }, presence: true
+  validates :total_time, numericality: { greater_than: 0.0 }, presence: true
+  validates :annual_interest_rate, numericality: { greater_than_or_equal_to: 0.0 }, presence: true
+  validates :annual_inflation_rate, numericality: { greater_than_or_equal_to: 0.0 }, presence: true
+  validates :discount_rate, numericality: { greater_than_or_equal_to: 0.0 }, presence: true
+
   before_update :set_up_attributes
   after_update :set_up_payments
 

@@ -1,7 +1,7 @@
-<%= simple_form_for(@loan, html: { class: 'loan-form' }) do |f| %>
+<%= simple_form_for(@loan, validate: true, html: { class: 'loan-form' }) do |f| %>
   <div class="column" id="column-1">
     <%= f.input :sale_price, label: 'Precio de venta', input_html: { value: number_with_precision(@loan.sale_price, precision: 2), min: 0.00, step: 0.01 } %>
-    <%= f.input :initial_payment, label: 'Costo inicial', input_html: { value: number_with_precision(@loan.initial_payment, precision: 2), min: 0.00 }, as: :string %>
+    <%= f.input :initial_payment, label: 'Costo inicial (S/.)', input_html: { value: number_with_precision(@loan.initial_payment, precision: 2), min: 0.00 }, as: :string %>
 
     <%= f.input :amount_payable, label: 'Monto a pagar', input_html: { disabled: true, readonly: true, value: number_with_precision(@loan.amount_payable, precision: 2), min: 0.00 } %>
 
@@ -99,13 +99,13 @@
         <td class="payment_annual_interest_rate editable-field">
           <%= number_to_percentage(payment.annual_interest_rate * 100, significant: true) %>
         </td>
-        <td class="payment_periodic_interest_rate editable-field">
+        <td class="payment_periodic_interest_rate">
           <%= number_to_percentage(payment.periodic_interest_rate * 100, significant: true) %>
         </td>
         <td class="payment_annual_inflation_rate editable-field">
           <%= number_to_percentage(payment.annual_inflation_rate * 100, significant: true) %>
         </td>
-        <td class="payment_periodic_inflation_rate editable-field">
+        <td class="payment_periodic_inflation_rate">
           <%= number_to_percentage(payment.periodic_inflation_rate * 100, significant: true) %>
         </td>
         <td class="payment_grace_period_type editable-field">

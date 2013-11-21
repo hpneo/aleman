@@ -7,6 +7,7 @@ for(var i = 0; i < payments.length; i++) {
   var payment_row = $('tr#payment-' + payments[i].id);
 
   payment_row.find('.payment_start_at').html(payment.start_at);
+  payment_row.find('.payment_annual_interest_rate').html(payment.annual_interest_rate);
   payment_row.find('.payment_periodic_interest_rate').html(payment.periodic_interest_rate);
   payment_row.find('.payment_annual_inflation_rate').html(payment.annual_inflation_rate);
   payment_row.find('.payment_periodic_inflation_rate').html(payment.periodic_inflation_rate);

@@ -9,6 +9,20 @@
     }
   }
 
+  nav {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 20px;
+
+    * {
+      display: inline-block;
+    }
+
+    .float.right {
+      float: right;
+    }
+  }
+
   #loan-initial-costs,
   #loan-recurrent-costs {
     .input {

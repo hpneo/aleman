@@ -35,6 +35,10 @@ GEM
     bcrypt-ruby (3.1.2)
     builder (3.0.4)
     choice (0.1.6)
+    client_side_validations (3.2.6)
+    client_side_validations-simple_form (2.1.0)
+      client_side_validations (~> 3.2.5)
+      simple_form (~> 2.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -139,6 +143,8 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  client_side_validations
+  client_side_validations-simple_form
   coffee-rails (~> 3.2.1)
   devise
   inherited_resources
