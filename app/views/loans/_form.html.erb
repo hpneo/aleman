@@ -143,24 +143,36 @@
         <td><abbr title="Valor actual neto">VAN</abbr> de la operación:</td>
         <td><%= number_to_currency(@loan.profits[:npv]) %></td>
       </tr>
+      <tr>
+        <td><abbr title="Índice beneficio/costo">B/C</abbr> de la operación:</td>
+        <td><%= (@loan.profits[:benefit_cost_rate]).round(4) %></td>
+      </tr>
     </tbody>
   </table>
 
   <div id="analytics">
-    <% if @loan.profits[:irr] >= @loan.profits[:discount_rate] %>
-      <p>La tasa interna de retorno es mayor que la tasa de descuento, lo que indica que en este caso la operación podría rechazarse.</p>
-    <% else %>
-      <p>La tasa interna de retorno es menor que la tasa de descuento, lo que indica que en este caso la operación debería aceptarse.</p>
+    <% if @loan.profits[:irr] > @loan.profits[:discount_rate] %>
+      <p>La tasa interna de retorno <strong>es mayor que la tasa de descuento</strong>, lo que indica que en este caso la operación podría aceptarse.</p>
+    <% end %>
+    <% if @loan.profits[:irr] < @loan.profits[:discount_rate] %>
+      <p>La tasa interna de retorno <strong>es menor que la tasa de descuento</strong>, lo que indica que en este caso la operación debería rechazarse.</p>
     <% end %>
 
     <% if @loan.profits[:npv].to_i < 0 %>
-      <p>El Valor Actual Neto (VAN) de esta operación es menor que <strong>0</strong>, lo que significa que podría generar pérdidas.</p>
+      <p>El Valor Actual Neto (VAN) de esta operación <strong>es menor que 0</strong>, lo que significa que podría generar pérdidas.</p>
     <% end %>
     <% if @loan.profits[:npv].to_i == 0 %>
-      <p>El Valor Actual Neto (VAN) de esta operación es <strong>0</strong>, lo que significa que no genera beneficios ni pérdidas.</p>
+      <p>El Valor Actual Neto (VAN) de esta operación <strong>es 0</strong>, lo que significa que no genera beneficios ni pérdidas.</p>
     <% end %>
     <% if @loan.profits[:npv].to_i > 0 %>
-      <p>El Valor Actual Neto (VAN) de esta operación es mayor que <strong>0</strong>, lo que significa que podría generar beneficios.</p>
+      <p>El Valor Actual Neto (VAN) de esta operación <strong>es mayor que 0</strong>, lo que significa que podría generar beneficios.</p>
+    <% end %>
+
+    <% if @loan.profits[:benefit_cost_rate] > 1.0 %>
+      <p>El índice beneficio / costo <strong>es mayor a 1</strong>, lo que indica que en este caso la operación podría aceptarse.</p>
+    <% end %>
+    <% if @loan.profits[:benefit_cost_rate] < 1.0 %>
+      <p>El índice beneficio / costo <strong>es menor a 1</strong>, lo que indica que en este caso la operación debería rechazarse.</p>
     <% end %>
   </div>
 </div>

@@ -152,6 +152,22 @@ class Loan < ActiveRecord::Base
     npv.round(7)
   end
 
+  def pv
+    pv = 0.0
+
+    discount_rate = self.calculate_discount_rate
+
+    self.payments.pluck(:cash_flow).each_with_index do |cash_flow, index|
+      pv = pv + (cash_flow.abs / ((1 + discount_rate) ** (index + 1)))
+    end
+
+    pv.round(7)
+  end
+
+  def benefit_cost_rate
+    self.pv / self.amount_payable
+  end
+
   def profits
     @profits ||= {}
 
@@ -159,6 +175,7 @@ class Loan < ActiveRecord::Base
     @profits[:irr] = self.irr
     @profits[:effective_annual_cost_rate] = self.calculate_effective_annual_cost_rate
     @profits[:npv] = self.npv
+    @profits[:benefit_cost_rate] = self.benefit_cost_rate
 
     @profits
   end
