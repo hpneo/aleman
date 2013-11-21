@@ -5,10 +5,10 @@ class Payment < ActiveRecord::Base
 
   belongs_to :loan
 
-  validates :annual_interest_rate, numericality: { greater_than_or_equal_to: 0.0 }, presence: true
-  validates :periodic_interest_rate, numericality: { greater_than_or_equal_to: 0.0 }, presence: true
-  validates :annual_inflation_rate, numericality: { greater_than_or_equal_to: 0.0 }, presence: true
-  validates :periodic_inflation_rate, numericality: { greater_than_or_equal_to: 0.0 }, presence: true
+  validates :annual_interest_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
+  validates :periodic_interest_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
+  validates :annual_inflation_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
+  validates :periodic_inflation_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
 
   before_save :set_up_attributes
   after_save :update_next_payment
