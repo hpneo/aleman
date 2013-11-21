@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require tabs
+//= require masked_input
 //= require_tree .

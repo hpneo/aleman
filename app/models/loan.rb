@@ -43,7 +43,11 @@ class Loan < ActiveRecord::Base
   end
 
   def payments_count
-    self.payments_per_year * self.years_count
+    if self.payments_per_year && self.years_count
+      self.payments_per_year * self.years_count
+    else
+      0
+    end
   end
 
   def set_up_payments
@@ -60,11 +64,19 @@ class Loan < ActiveRecord::Base
   end
 
   def payments_per_year
-    (DAYS_PER_YEAR / self.frequency).to_i
+    if self.frequency
+      (DAYS_PER_YEAR / self.frequency).to_i
+    else
+      0
+    end
   end
 
   def years_count
-    self.total_days / DAYS_PER_YEAR
+    if self.total_days
+      self.total_days / DAYS_PER_YEAR
+    else
+      0
+    end
   end
 
   def total_initial_costs

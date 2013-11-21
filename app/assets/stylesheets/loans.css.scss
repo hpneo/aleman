@@ -25,4 +25,25 @@
       width: 70px;
     }
   }
+
+  table {
+    font-size: 0.95em;
+    vertical-align: middle;
+
+    abbr {
+      cursor: help;
+    }
+
+    .negative {
+      color: #c0392b;
+    }
+
+    .positive {
+      color: #0d6251;
+    }
+  }
+
+  .payment_grace_period_type {
+    text-align: center;
+  }
 }
