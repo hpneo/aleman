@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131120232328) do
+ActiveRecord::Schema.define(:version => 20131121050150) do
 
   create_table "initial_costs", :force => true do |t|
     t.integer  "loan_id"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20131120232328) do
     t.decimal  "amount_payable",        :precision => 14, :scale => 7, :default => 0.0
     t.integer  "total_time"
     t.integer  "total_time_type"
+    t.integer  "days_per_year",                                        :default => 360
   end
 
   create_table "payments", :force => true do |t|

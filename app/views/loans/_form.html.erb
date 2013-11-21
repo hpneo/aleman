@@ -23,6 +23,7 @@
     <%= f.submit 'Calcular', class: 'button belize-hole' %>
   </div>
   <div class="column" id="column-3">
+    <%= f.input :days_per_year, label: 'Días por año', collection: Loan::DAYS_PER_YEAR.invert, include_blank: false %>
     <div class="tab-container">
       <nav class="tabs">
         <a href="#">Gastos Iniciales</a>
@@ -122,7 +123,7 @@
   </tbody>
 </table>
 
-<div id="payment-form-modal"></div>
+<div id="payment-form-modal" style="display: none;"></div>
 
 <script>
   $(document).ready(function() {

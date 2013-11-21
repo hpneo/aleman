@@ -2,7 +2,7 @@
 class Loan < ActiveRecord::Base
   attr_accessible :amount_payable, :annual_inflation_rate, :annual_interest_rate, :discount_rate, :frequency
   attr_accessible :grace_period_type, :initial_payment, :payments_count, :sale_price, :start_at, :total_days, :user_id
-  attr_accessible :total_time, :total_time_type, :initial_costs_attributes, :recurrent_costs_attributes
+  attr_accessible :total_time, :total_time_type, :initial_costs_attributes, :recurrent_costs_attributes, :days_per_year
 
   TIME_TYPES = {
     15 => 'Quincenas',
@@ -24,7 +24,10 @@ class Loan < ActiveRecord::Base
     p: 'Plazo parcial'
   }
 
-  DAYS_PER_YEAR = 360
+  DAYS_PER_YEAR = {
+    360 => '360 días',
+    365 => '365 días',
+  }
 
   belongs_to :user
   has_many :payments
@@ -72,7 +75,7 @@ class Loan < ActiveRecord::Base
 
   def payments_per_year
     if self.frequency
-      (DAYS_PER_YEAR / self.frequency).to_i
+      (self.days_per_year / self.frequency).to_i
     else
       0
     end
@@ -80,7 +83,7 @@ class Loan < ActiveRecord::Base
 
   def years_count
     if self.total_days
-      self.total_days / DAYS_PER_YEAR
+      self.total_days / self.days_per_year
     else
       0
     end
