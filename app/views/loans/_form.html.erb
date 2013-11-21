@@ -87,7 +87,7 @@
     <tbody>
       <tr>
         <td>Porcentaje de seguro de desgravamen de cada periodo:</td>
-        <td><%= @loan.results[:credit_life_insurance_percentage] %></td>
+        <td><%= number_to_percentage(@loan.results[:credit_life_insurance_percentage] * 100) %></td>
       </tr>
       <tr>
         <td>Seguro de riesgo:</td>
