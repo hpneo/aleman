@@ -22,7 +22,7 @@ var FormValidator = function(model_name, form, validators, messages) {
         var actual = element.val();
         var expected = validator.options[validator_rule];
 
-        if (validator_rule in validator_callbacks) {
+        if (element.length > 0 && validator_rule in validator_callbacks) {
           is_valid = validator_callbacks[validator_rule](actual, expected);
           are_valid.push(is_valid);
 

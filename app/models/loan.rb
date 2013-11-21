@@ -149,7 +149,7 @@ class Loan < ActiveRecord::Base
       npv = npv + (cash_flow / ((1 + discount_rate) ** (index + 1)))
     end
 
-    npv
+    npv.round(7)
   end
 
   def profits
