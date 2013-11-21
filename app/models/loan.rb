@@ -39,7 +39,7 @@ class Loan < ActiveRecord::Base
 
   validates :sale_price, numericality: { greater_than: 0 }, presence: true
   validates :initial_payment, numericality: { greater_than_or_equal_to: 0 }, presence: true
-  validates :total_time, numericality: { greater_than: 0 }, presence: true
+  validates :total_time, presence: true, numericality: { greater_than: 0 }
   validates :annual_interest_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
   validates :annual_inflation_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
   validates :discount_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
@@ -111,5 +111,47 @@ class Loan < ActiveRecord::Base
 
   def administrative_costs
     self.recurrent_costs.where(name: 'administrative_costs').pluck(:amount).sum.to_f
+  end
+
+  def results
+    @results ||= {}
+
+    @results[:credit_life_insurance_percentage] = ((self.credit_life_insurance_percentage * self.frequency) / 30).abs
+    @results[:risk_insurance] = ((self.risk_insurance_percentage * self.sale_price) / self.payments_per_year).abs
+    @results[:interests] = self.payments.pluck(:interest).sum.to_f.abs
+    @results[:amortizations] = (self.payments.pluck(:amortization).sum.to_f + self.payments.pluck(:prepayment).sum.to_f).abs
+    @results[:credit_life_insurances] = self.payments.map(&:credit_life_insurance).sum.abs
+    @results[:risk_insurances] = (@results[:risk_insurance] * self.payments_count).abs
+    @results[:periodic_fees] = (self.periodic_fee * self.payments_count).abs
+    @results[:freights] = ((-self.freight * self.payments_count) + (-self.administrative_costs * self.payments_count)).abs
+
+    @results
+  end
+
+  def calculate_discount_rate
+    (((self.discount_rate + 1) ** (self.frequency.to_d / self.days_per_year.to_d)) - 1).round(7)
+  end
+
+  def calculate_effective_annual_cost_rate
+    (((1 + self.irr) ** self.payments_per_year) - 1).round(7)
+  end
+
+  def calculate_irr
+    ([self.amount_payable] + self.payments.pluck(:cash_flow).to_a).irr.round(7)
+  end
+
+  def calculate_npv
+    self.amount_payable + self.payments.pluck(:cash_flow).npv(self.calculate_discount_rate)
+  end
+
+  def profits
+    @profits ||= {}
+
+    @profits[:discount_rate] = self.calculate_discount_rate
+    @profits[:irr] = self.irr
+    @profits[:effective_annual_cost_rate] = self.calculate_effective_annual_cost_rate
+    @profits[:npv] = self.npv
+
+    @profits
   end
 end

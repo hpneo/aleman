@@ -19,6 +19,9 @@
         <th>Fecha de inicio</th>
         <th>Tiempo</th>
         <th>Número de cuotas</th>
+        <th><abbr title="Tasa de costo efectivo anual">TCEA</abbr></th>
+        <th><abbr title="Tasa interna de retorno">TIR</abbr></th>
+        <th><abbr title="Valor actual neto">VAN</abbr></th>
         <th></th>
       </tr>
     </thead>
@@ -30,6 +33,9 @@
           <td><%= loan.start_at %></td>
           <td><%= loan.total_time %> <%= Loan::TIME_TYPES[loan.total_time_type] %></td>
           <td><%= loan.payments_count %></td>
+          <td><%= number_to_percentage(loan.profits[:effective_annual_cost_rate] * 100) %></td>
+          <td><%= number_to_percentage(loan.profits[:irr] * 100, significant: true) %></td>
+          <td><%= number_to_currency(loan.profits[:npv]) %></td>
           <td><a href="<%= loan_path(loan) %>">Ver</a></td>
         </tr>
       <% end %>

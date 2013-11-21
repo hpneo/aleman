@@ -54,7 +54,7 @@ class Payment < ActiveRecord::Base
   end
 
   def risk_insurance
-    (-self.loan.risk_insurance_percentage * self.loan.sale_price) / self.loan.payments_per_year
+    -((self.loan.risk_insurance_percentage * self.loan.sale_price) / self.loan.payments_per_year)
   end
 
   def periodic_fee
@@ -70,8 +70,8 @@ class Payment < ActiveRecord::Base
   end
 
   def set_up_attributes
-    self.periodic_interest_rate = ((self.annual_interest_rate + 1) ** (self.loan.frequency.to_d / Loan::DAYS_PER_YEAR)) - 1
-    self.periodic_inflation_rate = ((self.annual_inflation_rate + 1) ** (self.loan.frequency.to_d / Loan::DAYS_PER_YEAR)) - 1
+    self.periodic_interest_rate = ((self.annual_interest_rate + 1) ** (self.loan.frequency.to_d / loan.days_per_year)) - 1
+    self.periodic_inflation_rate = ((self.annual_inflation_rate + 1) ** (self.loan.frequency.to_d / loan.days_per_year)) - 1
 
     if self.is_first_payment?
       self.opening_balance = self.loan.amount_payable
@@ -104,6 +104,11 @@ class Payment < ActiveRecord::Base
   end
 
   def update_next_payment
+    if is_last_payment?
+      self.loan.update_column(:irr, self.loan.calculate_irr)
+      self.loan.update_column(:npv, self.loan.calculate_npv)
+    end
+
     if self.next_payment
       self.next_payment.set_up_attributes.save
     end

@@ -14,5 +14,3 @@
 //= require jquery_ujs
 //= require tabs
 //= require masked_input
-//= require rails.validations
-//= require rails.validations.simple_form

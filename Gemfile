@@ -37,6 +37,8 @@ gem 'active_model_serializers'
 gem 'client_side_validations'
 gem 'client_side_validations-simple_form'
 
+gem 'finance'
+
 group :development do
   gem 'rails-erd'
 end

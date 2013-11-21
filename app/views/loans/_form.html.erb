@@ -1,4 +1,4 @@
-<%= simple_form_for(@loan, validate: true, html: { class: 'loan-form', id: 'loan_form' }) do |f| %>
+<%= simple_form_for(@loan, html: { class: 'loan-form', id: 'loan_form', novalidate: 'novalidate' }) do |f| %>
   <div class="column" id="column-1">
     <%= f.input :sale_price, label: 'Precio de venta', input_html: { value: number_with_precision(@loan.sale_price, precision: 2), min: 0.00, step: 0.01 } %>
     <%= f.input :initial_payment, label: 'Costo inicial (S/.)', input_html: { value: number_with_precision(@loan.initial_payment, precision: 2), min: 0.00 }, as: :string %>
@@ -74,6 +74,83 @@
   </div>
 <% end %>
 
+<% if @loan.persisted? %>
+<h2>Resultados y rentabilidad</h2>
+
+<div id="results-and-profits">
+  <table class="table table-striped" id="loan-results">
+    <thead>
+      <tr>
+        <th colspan="2">Resultados</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Porcentaje de seguro de desgravamen de cada periodo:</td>
+        <td><%= @loan.results[:credit_life_insurance_percentage] %></td>
+      </tr>
+      <tr>
+        <td>Seguro de riesgo:</td>
+        <td><%= @loan.results[:risk_insurance] %></td>
+      </tr>
+      <tr>
+        <td>Intereses:</td>
+        <td><%= @loan.results[:interests] %></td>
+      </tr>
+      <tr>
+        <td>Amortización del capital:</td>
+        <td><%= @loan.results[:amortizations] %></td>
+      </tr>
+      <tr>
+        <td>Seguro de desgravamen:</td>
+        <td><%= @loan.results[:credit_life_insurances] %></td>
+      </tr>
+      <tr>
+        <td>Seguro contra todo riesgo:</td>
+        <td><%= @loan.results[:risk_insurances] %></td>
+      </tr>
+      <tr>
+        <td>Comisiones periódicas:</td>
+        <td><%= @loan.results[:periodic_fees] %></td>
+      </tr>
+      <tr>
+        <td>Portes y gastos administrativos:</td>
+        <td><%= @loan.results[:freights] %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-striped" id="loan-profits">
+    <thead>
+      <tr>
+        <th colspan="2">Rentabilidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tasa de descuento:</td>
+        <td><%= number_to_percentage(@loan.profits[:discount_rate] * 100) %></td>
+      </tr>
+      <tr>
+        <td>TIR de la operación:</td>
+        <td><%= number_to_percentage(@loan.profits[:irr] * 100, significant: true) %></td>
+      </tr>
+      <tr>
+        <td>TCEA:</td>
+        <td><%= number_to_percentage(@loan.profits[:effective_annual_cost_rate] * 100) %></td>
+      </tr>
+      <tr>
+        <td>VAN de la operación:</td>
+        <td><%= number_to_currency(@loan.profits[:npv]) %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<% end %>
+
+<h2>Pagos</h2>
+
 <table class="table table-striped" id="loan-payments">
   <thead>
     <tr>
@@ -126,10 +203,8 @@
 <div id="payment-form-modal" style="display: none;"></div>
 
 <script type="text/javascript">
-  ClientSideValidations.forms.loan_form.validators['loan[total_time]'] = {"numericality":[{"messages":{"numericality":"no es un número","greater_than":"debe ser mayor que 0"},"greater_than":0}],"presence":[{"message":"no puede estar en blanco"}]};
+  var validations_for_loan = <%= Loan.validators.to_json.html_safe %>;
   $(document).ready(function() {
-    $('#loan_form').resetClientSideValidations();
-
     var costs_tabs = new Tabs($('.tab-container'));
 
     var loan_masked_inputs = new MaskedInput($('#loan_annual_interest_rate, #loan_annual_inflation_rate, #loan_discount_rate'), function(value) {

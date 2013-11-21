@@ -7,6 +7,10 @@
     h1 {
       font-weight: 400;
     }
+
+    h2 {
+      font-weight: 300;
+    }
   }
 
   nav {
@@ -67,6 +71,21 @@
         text-decoration: underline;
       }
     }
+  }
+
+  #results-and-profits {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #loan-results {
+    width: 49.5%;
+    float: left;
+  }
+
+  #loan-profits {
+    width: 49.5%;
+    float: right;
   }
 
   .payment_grace_period_type {

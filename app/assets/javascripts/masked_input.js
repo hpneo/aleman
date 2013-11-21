@@ -5,7 +5,13 @@ var MaskedInput = function(input, mask, actual) {
   var self = this;
 
   input.on('focus', function() {
-    $(this).val(self.actual($(this).val()));
+    var val = self.actual($(this).val());
+
+    if (isNaN(val)) {
+      val = 0;
+    }
+
+    $(this).val(val);
   });
 
   input.on('blur', function() {
@@ -15,6 +21,10 @@ var MaskedInput = function(input, mask, actual) {
   input.each(function(){
     $(this).addClass('masked-input');
     $(this).val(self.mask($(this).val()));
+  });
+
+  input.parents('form').on('ajax:beforeSend', function(e) {
+    e.preventDefault();
   });
 
   input.parents('form').on('submit', function() {
