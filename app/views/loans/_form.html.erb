@@ -1,4 +1,4 @@
-<%= simple_form_for(@loan, validate: true, html: { class: 'loan-form' }) do |f| %>
+<%= simple_form_for(@loan, validate: true, html: { class: 'loan-form', id: 'loan_form' }) do |f| %>
   <div class="column" id="column-1">
     <%= f.input :sale_price, label: 'Precio de venta', input_html: { value: number_with_precision(@loan.sale_price, precision: 2), min: 0.00, step: 0.01 } %>
     <%= f.input :initial_payment, label: 'Costo inicial (S/.)', input_html: { value: number_with_precision(@loan.initial_payment, precision: 2), min: 0.00 }, as: :string %>
@@ -125,8 +125,11 @@
 
 <div id="payment-form-modal" style="display: none;"></div>
 
-<script>
+<script type="text/javascript">
+  ClientSideValidations.forms.loan_form.validators['loan[total_time]'] = {"numericality":[{"messages":{"numericality":"no es un número","greater_than":"debe ser mayor que 0"},"greater_than":0}],"presence":[{"message":"no puede estar en blanco"}]};
   $(document).ready(function() {
+    $('#loan_form').resetClientSideValidations();
+
     var costs_tabs = new Tabs($('.tab-container'));
 
     var loan_masked_inputs = new MaskedInput($('#loan_annual_interest_rate, #loan_annual_inflation_rate, #loan_discount_rate'), function(value) {
