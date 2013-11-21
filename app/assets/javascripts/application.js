@@ -14,3 +14,5 @@
 //= require jquery_ujs
 //= require tabs
 //= require masked_input
+//= require editable_field
+//= require form_validator

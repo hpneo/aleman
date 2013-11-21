@@ -44,8 +44,8 @@ class Loan < ActiveRecord::Base
   validates :annual_inflation_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
   validates :discount_rate, numericality: { greater_than_or_equal_to: 0 }, presence: true
 
-  before_update :set_up_attributes
-  after_update :set_up_payments
+  before_save :set_up_attributes
+  after_save :set_up_payments
 
   def set_up_attributes
     self.total_days = self.total_time * self.total_time_type

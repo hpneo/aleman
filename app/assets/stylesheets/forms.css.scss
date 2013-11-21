@@ -17,6 +17,10 @@ form {
   }
 }
 
+.input {
+  position: relative;
+}
+
 .loan-form {
   .column {
     &#column-1 {
@@ -86,10 +90,6 @@ form {
 
   input {
     width: 120px;
-  }
-
-  .input {
-    position: relative;
   }
 
   .loan_amount_payable {

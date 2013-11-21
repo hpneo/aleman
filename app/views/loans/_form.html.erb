@@ -204,6 +204,9 @@
 
 <script type="text/javascript">
   var validations_for_loan = <%= Loan.validators.to_json.html_safe %>;
+  var validations_for_payment = <%= Payment.validators.to_json.html_safe %>;
+  var validations_messages = <%= YAML.load_file("#{Rails.root}/config/locales/es.yml").to_json.html_safe %>.es.errors.messages;
+
   $(document).ready(function() {
     var costs_tabs = new Tabs($('.tab-container'));
 
@@ -232,39 +235,16 @@
       }
     });
 
-    var editable_field_labels = {
+    new FormValidator('loan', $('#loan_form'), validations_for_loan, validations_messages);
+
+    EditableField($('.editable-field'), {
       annual_interest_rate: 'TEA',
       periodic_interest_rate: 'TEP',
       annual_inflation_rate: 'Inflación anual',
       periodic_inflation_rate: 'Inflación del periodo',
       grace_period_type: 'Plazo de gracia'
-    };
-
-    $('.editable-field').on('click', function() {
-      var payment_id = $(this).parents('tr').attr('id').replace('payment-', '');
-
-      var field = $(this).attr('class').replace('editable-field', '').trim().replace('payment_', '').trim();
-
-      var position = $(this).first().position();
-      var width = $(this).outerWidth() + 10;
-
-      $.ajax({
-        url: '/payments/' + payment_id + '/form',
-        type: 'GET',
-        dataType: 'html',
-        data: {
-          field: field,
-          label: editable_field_labels[field]
-        },
-        success: function(data) {
-          $('#payment-form-modal').html(data);
-
-          position.left = position.left + width;
-          position.top = position.top - ($('#payment-form-modal').height() / 2);
-
-          $('#payment-form-modal').css(position).show();
-        }
-      });
+    }, function(form) {
+      new FormValidator('payment', form, validations_for_payment, validations_messages);
     });
   });
 </script>
