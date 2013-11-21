@@ -132,19 +132,37 @@
         <td><%= number_to_percentage(@loan.profits[:discount_rate] * 100) %></td>
       </tr>
       <tr>
-        <td>TIR de la operación:</td>
+        <td><abbr title="TIR">Tasa interna de retorno</abbr> de la operación:</td>
         <td><%= number_to_percentage(@loan.profits[:irr] * 100, significant: true) %></td>
       </tr>
       <tr>
-        <td>TCEA:</td>
+        <td><abbr title="Tasa de costo efectivo anual">TCEA</abbr>:</td>
         <td><%= number_to_percentage(@loan.profits[:effective_annual_cost_rate] * 100) %></td>
       </tr>
       <tr>
-        <td>VAN de la operación:</td>
+        <td><abbr title="Valor actual neto">VAN</abbr> de la operación:</td>
         <td><%= number_to_currency(@loan.profits[:npv]) %></td>
       </tr>
     </tbody>
   </table>
+
+  <div id="analytics">
+    <% if @loan.profits[:irr] >= @loan.profits[:discount_rate] %>
+      <p>La tasa interna de retorno es mayor que la tasa de descuento, lo que indica que en este caso la operación podría rechazarse.</p>
+    <% else %>
+      <p>La tasa interna de retorno es menor que la tasa de descuento, lo que indica que en este caso la operación debería aceptarse.</p>
+    <% end %>
+
+    <% if @loan.profits[:npv].to_i < 0 %>
+      <p>El Valor Actual Neto (VAN) de esta operación es menor que <strong>0</strong>, lo que significa que podría generar pérdidas.</p>
+    <% end %>
+    <% if @loan.profits[:npv].to_i == 0 %>
+      <p>El Valor Actual Neto (VAN) de esta operación es <strong>0</strong>, lo que significa que no genera beneficios ni pérdidas.</p>
+    <% end %>
+    <% if @loan.profits[:npv].to_i > 0 %>
+      <p>El Valor Actual Neto (VAN) de esta operación es mayor que <strong>0</strong>, lo que significa que podría generar beneficios.</p>
+    <% end %>
+  </div>
 </div>
 
 <% end %>

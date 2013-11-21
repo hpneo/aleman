@@ -41,4 +41,5 @@ gem 'finance'
 
 group :development do
   gem 'rails-erd'
+  gem 'bullet'
 end

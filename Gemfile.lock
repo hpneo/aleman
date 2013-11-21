@@ -34,6 +34,8 @@ GEM
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
     builder (3.0.4)
+    bullet (4.6.0)
+      uniform_notifier
     choice (0.1.6)
     client_side_validations (3.2.6)
     client_side_validations-simple_form (2.1.0)
@@ -138,6 +140,7 @@ GEM
     uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    uniform_notifier (1.2.0)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -146,6 +149,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  bullet
   client_side_validations
   client_side_validations-simple_form
   coffee-rails (~> 3.2.1)

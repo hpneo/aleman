@@ -120,7 +120,7 @@ class Loan < ActiveRecord::Base
     @results[:risk_insurance] = ((self.risk_insurance_percentage * self.sale_price) / self.payments_per_year).abs
     @results[:interests] = self.payments.pluck(:interest).sum.to_f.abs
     @results[:amortizations] = (self.payments.pluck(:amortization).sum.to_f + self.payments.pluck(:prepayment).sum.to_f).abs
-    @results[:credit_life_insurances] = self.payments.map(&:credit_life_insurance).sum.abs
+    @results[:credit_life_insurances] = Payment.where(loan_id: self.id).includes(:loan).map(&:credit_life_insurance).sum.abs
     @results[:risk_insurances] = (@results[:risk_insurance] * self.payments_count).abs
     @results[:periodic_fees] = (self.periodic_fee * self.payments_count).abs
     @results[:freights] = ((-self.freight * self.payments_count) + (-self.administrative_costs * self.payments_count)).abs
