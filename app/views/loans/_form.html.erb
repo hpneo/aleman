@@ -91,31 +91,31 @@
       </tr>
       <tr>
         <td>Seguro de riesgo:</td>
-        <td><%= @loan.results[:risk_insurance] %></td>
+        <td><%= number_to_currency(@loan.results[:risk_insurance]) %></td>
       </tr>
       <tr>
         <td>Intereses:</td>
-        <td><%= @loan.results[:interests] %></td>
+        <td><%= number_to_currency(@loan.results[:interests]) %></td>
       </tr>
       <tr>
         <td>Amortización del capital:</td>
-        <td><%= @loan.results[:amortizations] %></td>
+        <td><%= number_to_currency(@loan.results[:amortizations]) %></td>
       </tr>
       <tr>
         <td>Seguro de desgravamen:</td>
-        <td><%= @loan.results[:credit_life_insurances] %></td>
+        <td><%= number_to_currency(@loan.results[:credit_life_insurances]) %></td>
       </tr>
       <tr>
         <td>Seguro contra todo riesgo:</td>
-        <td><%= @loan.results[:risk_insurances] %></td>
+        <td><%= number_to_currency(@loan.results[:risk_insurances]) %></td>
       </tr>
       <tr>
         <td>Comisiones periódicas:</td>
-        <td><%= @loan.results[:periodic_fees] %></td>
+        <td><%= number_to_currency(@loan.results[:periodic_fees]) %></td>
       </tr>
       <tr>
         <td>Portes y gastos administrativos:</td>
-        <td><%= @loan.results[:freights] %></td>
+        <td><%= number_to_currency(@loan.results[:freights]) %></td>
       </tr>
     </tbody>
   </table>
