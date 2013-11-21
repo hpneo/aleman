@@ -27,14 +27,56 @@ form {
 
     &#column-1 {
       width: 32%;
+
+      .error {
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: -160px;
+        background: #c0392b;
+        padding: 5px 10px;
+        color: #fcfcfc;
+        border-radius: 2px;
+        box-shadow: 0 0 10px #bdc3c7;
+        z-index: 1;
+        font-size: 0.9em;
+      }
     }
 
     &#column-2 {
       width: 39%;
+
+      .error {
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: -160px;
+        background: #c0392b;
+        padding: 5px 10px;
+        color: #fcfcfc;
+        border-radius: 2px;
+        box-shadow: 0 0 10px #bdc3c7;
+        z-index: 1;
+        font-size: 0.9em;
+      }
     }
 
     &#column-3 {
       width: 28%;
+
+      .error {
+        display: block;
+        position: absolute;
+        top: 0px;
+        right: -160px;
+        background: #c0392b;
+        padding: 5px 10px;
+        color: #fcfcfc;
+        border-radius: 2px;
+        box-shadow: 0 0 10px #bdc3c7;
+        z-index: 1;
+        font-size: 0.9em;
+      }
     }
   }
 
@@ -50,6 +92,10 @@ form {
 
   input {
     width: 120px;
+  }
+
+  .input {
+    position: relative;
   }
 
   .loan_amount_payable {
