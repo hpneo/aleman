@@ -19,7 +19,13 @@ var MaskedInput = function(input, mask, actual) {
 
   input.parents('form').on('submit', function() {
     $(this).find('.masked-input').each(function(){
-      $(this).val(self.actual($(this).val()));
+      var val = self.actual($(this).val());
+
+      if (isNaN(val)) {
+        val = 0;
+      }
+
+      $(this).val(val);
     });
   });
 };

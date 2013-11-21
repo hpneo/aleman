@@ -93,44 +93,40 @@
   </thead>
   <tbody>
     <% @loan.payments.each do |payment| %>
-      <tr id="payment-<%= payment %>">
-        <th class="payment_payment_index"><%= payment.payment_index %></th>
-        <th class="payment_start_at"><%= payment.start_at %></th>
-        <th class="payment_annual_interest_rate"><%= number_to_percentage(payment.annual_interest_rate * 100, significant: true) %></th>
-        <th class="payment_periodic_interest_rate"><%= number_to_percentage(payment.periodic_interest_rate * 100, significant: true) %></th>
-        <th class="payment_annual_inflation_rate"><%= number_to_percentage(payment.annual_inflation_rate * 100, significant: true) %></th>
-        <th class="payment_periodic_inflation_rate"><%= number_to_percentage(payment.periodic_inflation_rate * 100, significant: true) %></th>
-        <th class="payment_grace_period_type"><%= Loan::GRACE_PERIODS[payment.grace_period_type.to_sym] %></th>
-        <th class="payment_opening_balance"><%= conditional_format(number_to_currency(payment.opening_balance)) %></th>
-        <th class="payment_interest"><%= conditional_format(number_to_currency(payment.interest)) %></th>
-        <th class="payment_amortization"><%= conditional_format(number_to_currency(payment.amortization)) %></th>
-        <th class="payment_quota"><%= conditional_format(number_to_currency(payment.quota)) %></th>
-        <th class="payment_final_balance"><%= conditional_format(number_to_currency(payment.final_balance)) %></th>
-        <th class="payment_cash_flow"><%= conditional_format(number_to_currency(payment.cash_flow)) %></th>
+      <tr id="payment-<%= payment.id %>">
+        <td class="payment_payment_index"><%= payment.payment_index %></td>
+        <td class="payment_start_at"><%= payment.start_at %></td>
+        <td class="payment_annual_interest_rate editable-field">
+          <%= number_to_percentage(payment.annual_interest_rate * 100, significant: true) %>
+        </td>
+        <td class="payment_periodic_interest_rate editable-field">
+          <%= number_to_percentage(payment.periodic_interest_rate * 100, significant: true) %>
+        </td>
+        <td class="payment_annual_inflation_rate editable-field">
+          <%= number_to_percentage(payment.annual_inflation_rate * 100, significant: true) %>
+        </td>
+        <td class="payment_periodic_inflation_rate editable-field">
+          <%= number_to_percentage(payment.periodic_inflation_rate * 100, significant: true) %>
+        </td>
+        <td class="payment_grace_period_type editable-field">
+          <%= Loan::GRACE_PERIODS[payment.grace_period_type.to_sym] %>
+        </td>
+        <td class="payment_opening_balance"><%= conditional_format(number_to_currency(payment.opening_balance)) %></td>
+        <td class="payment_interest"><%= conditional_format(number_to_currency(payment.interest)) %></td>
+        <td class="payment_amortization"><%= conditional_format(number_to_currency(payment.amortization)) %></td>
+        <td class="payment_quota"><%= conditional_format(number_to_currency(payment.quota)) %></td>
+        <td class="payment_final_balance"><%= conditional_format(number_to_currency(payment.final_balance)) %></td>
+        <td class="payment_cash_flow"><%= conditional_format(number_to_currency(payment.cash_flow)) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<div id="payment-form-modal"></div>
+
 <script>
   $(document).ready(function() {
     var costs_tabs = new Tabs($('.tab-container'));
-
-    // var loan_initial_payment = new MaskedInput($('#loan_initial_payment'), function(value) {
-    //   if (!value.match("%")) {
-    //     return ((value / $('#loan_sale_price').val()) * 100) + "%";
-    //   }
-    //   else {
-    //     return $('#loan_sale_price').val() * (parseFloat(value) / 100);
-    //   }
-    // }, function(value) {
-    //   if (!value.match("%")) {
-    //     return $('#loan_sale_price').val() * (parseFloat(value) / 100);
-    //   }
-    //   else {
-    //     return ((value / $('#loan_sale_price').val()) * 100) + "%";
-    //   }
-    // });
 
     var loan_masked_inputs = new MaskedInput($('#loan_annual_interest_rate, #loan_annual_inflation_rate, #loan_discount_rate'), function(value) {
       return (value * 100) + "%";
@@ -155,6 +151,41 @@
       else {
         loan_masked_inputs.remove(input);
       }
+    });
+
+    var editable_field_labels = {
+      annual_interest_rate: 'TEA',
+      periodic_interest_rate: 'TEP',
+      annual_inflation_rate: 'Inflación anual',
+      periodic_inflation_rate: 'Inflación del periodo',
+      grace_period_type: 'Plazo de gracia'
+    };
+
+    $('.editable-field').on('click', function() {
+      var payment_id = $(this).parents('tr').attr('id').replace('payment-', '');
+
+      var field = $(this).attr('class').replace('editable-field', '').trim().replace('payment_', '').trim();
+
+      var position = $(this).first().position();
+      var width = $(this).outerWidth() + 10;
+
+      $.ajax({
+        url: '/payments/' + payment_id + '/form',
+        type: 'GET',
+        dataType: 'html',
+        data: {
+          field: field,
+          label: editable_field_labels[field]
+        },
+        success: function(data) {
+          $('#payment-form-modal').html(data);
+
+          position.left = position.left + width;
+          position.top = position.top - ($('#payment-form-modal').height() / 2);
+
+          $('#payment-form-modal').css(position).show();
+        }
+      });
     });
   });
 </script>

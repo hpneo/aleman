@@ -1,0 +1,9 @@
+<%= simple_form_for(@payment, remote: true) do |f| %>
+  <% input_opts = { label: params[:label] } %>
+  <% if params[:field] == "grace_period_type" %>
+  <% input_opts[:collection] = Loan::GRACE_PERIODS.invert %>
+  <% input_opts[:include_blank] = false %>
+  <% end %>
+  <%= f.input params[:field].to_sym, input_opts %>
+  <%= f.submit 'Actualizar', class: 'button belize-hole' %>
+<% end %>

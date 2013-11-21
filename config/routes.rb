@@ -6,7 +6,11 @@ Aleman::Application.routes.draw do
   end
 
   resources :loans
-  resources :payments
+  resources :payments do
+    member do
+      get 'form'
+    end
+  end
   
   root :to => 'home#index'
 end

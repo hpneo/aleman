@@ -31,3 +31,9 @@ gem 'inherited_resources'
 gem 'simple_form'
 
 gem 'devise'
+
+gem 'active_model_serializers'
+
+group :development do
+  gem 'rails-erd'
+end

@@ -41,9 +41,31 @@
     .positive {
       color: #0d6251;
     }
+
+    .editable-field {
+      background: #f6f3d9;
+      color: #b36554;
+      cursor: pointer;
+      text-align: center;
+
+      &:hover {
+        background: #efe9b7;
+        text-decoration: underline;
+      }
+    }
   }
 
   .payment_grace_period_type {
     text-align: center;
+  }
+
+  #payment-form-modal {
+    display: block;
+    position: absolute;
+    background: #fcfcfc;
+    padding: 20px;
+    color: #2c3e50;
+    border-radius: 2px;
+    box-shadow: 0 0 10px #bdc3c7;
   }
 }

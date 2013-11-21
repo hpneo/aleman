@@ -1,0 +1,20 @@
+$('#payment-form-modal').hide().html('');
+
+var payments = <%= @serialized_payments.to_json.html_safe %>;
+
+for(var i = 0; i < payments.length; i++) {
+  var payment = payments[i];
+  var payment_row = $('tr#payment-' + payments[i].id);
+
+  payment_row.find('.payment_start_at').html(payment.start_at);
+  payment_row.find('.payment_periodic_interest_rate').html(payment.periodic_interest_rate);
+  payment_row.find('.payment_annual_inflation_rate').html(payment.annual_inflation_rate);
+  payment_row.find('.payment_periodic_inflation_rate').html(payment.periodic_inflation_rate);
+  payment_row.find('.payment_grace_period_type').html(payment.grace_period_type);
+  payment_row.find('.payment_opening_balance').html(payment.opening_balance);
+  payment_row.find('.payment_interest').html(payment.interest);
+  payment_row.find('.payment_amortization').html(payment.amortization);
+  payment_row.find('.payment_quota').html(payment.quota);
+  payment_row.find('.payment_final_balance').html(payment.final_balance);
+  payment_row.find('.payment_cash_flow').html(payment.cash_flow);
+}

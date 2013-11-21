@@ -1,21 +1,30 @@
 class Payment < ActiveRecord::Base
   attr_accessible :amortization, :annual_inflation_rate, :annual_interest_rate, :cash_flow, :final_balance
   attr_accessible :grace_period_type, :interest, :opening_balance, :payment_index, :periodic_inflation_rate
-  attr_accessible :periodic_interest_rate, :prepayment, :quota, :start_at, :d_id
+  attr_accessible :periodic_interest_rate, :prepayment, :quota, :start_at, :loan_id
 
   belongs_to :loan
 
-  before_create :set_up_attributes
+  before_save :set_up_attributes
+  after_save :update_next_payment
 
   def is_first_payment?
     self.payment_index == 1
   end
 
-  def previous_payment_final_balance
+  def is_last_payment?
+    self.payment_index == self.loan.payments_count
+  end
+
+  def previous_payment
     unless self.is_first_payment?
-      Payment.where(loan_id: self.loan_id, payment_index: self.payment_index - 1).select(:final_balance).first.final_balance
-    else
-      0.0
+      Payment.where(loan_id: self.loan_id, payment_index: self.payment_index - 1).first
+    end
+  end
+
+  def next_payment
+    unless self.is_last_payment?
+      Payment.where(loan_id: self.loan_id, payment_index: self.payment_index + 1).first
     end
   end
 
@@ -62,7 +71,7 @@ class Payment < ActiveRecord::Base
     if self.is_first_payment?
       self.opening_balance = self.loan.amount_payable
     else
-      self.opening_balance = self.previous_payment_final_balance
+      self.opening_balance = self.previous_payment.final_balance
     end
 
     self.interest = -self.indexed_opening_balance * self.periodic_interest_rate
@@ -80,11 +89,18 @@ class Payment < ActiveRecord::Base
     when 's'
       self.amortization = -self.indexed_opening_balance / (self.loan.payments_count - self.payment_index + 1)
 
-      #Interes+Amort+SegDes
       self.quota = self.interest + self.amortization + self.credit_life_insurance
       self.final_balance = self.indexed_opening_balance + self.amortization + self.prepayment
     end
 
     self.cash_flow = self.quota + self.prepayment + self.risk_insurance + self.periodic_fee + self.freight + self.administrative_costs + self.cash_flow_credit_life_insurance
+
+    self
+  end
+
+  def update_next_payment
+    if self.next_payment
+      self.next_payment.set_up_attributes.save
+    end
   end
 end
