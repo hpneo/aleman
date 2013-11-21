@@ -19,7 +19,12 @@ var FormValidator = function(model_name, form, validators, messages) {
 
     for (validator_rule in validator.options) {
       (function(validator_rule) {
-        var actual = element.val();
+        if (element.is('.masked-input')) {
+          var actual = parseFloat(element.val()) / 100;
+        }
+        else {
+          var actual = element.val();
+        }
         var expected = validator.options[validator_rule];
 
         if (element.length > 0 && validator_rule in validator_callbacks) {

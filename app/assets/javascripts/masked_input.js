@@ -4,7 +4,7 @@ var MaskedInput = function(input, mask, actual) {
 
   var self = this;
 
-  input.on('focus', function() {
+  /*input.on('focus', function() {
     var val = self.actual($(this).val());
 
     if (isNaN(val)) {
@@ -16,7 +16,7 @@ var MaskedInput = function(input, mask, actual) {
 
   input.on('blur', function() {
     $(this).val(self.mask($(this).val()));
-  });
+  });*/
 
   input.each(function(){
     $(this).addClass('masked-input');

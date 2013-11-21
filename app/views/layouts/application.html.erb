@@ -11,6 +11,9 @@
   <header id="header">
     <div class="wrapper">
       <h1><a href="/">Mi plan de pago</a></h1>
+      <% if user_signed_in? %>
+        <a href="/sign_out">Cerrar sesión</a>
+      <% end %>
     </div>
   </header>
   <section id="main">
