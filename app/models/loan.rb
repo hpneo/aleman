@@ -141,7 +141,15 @@ class Loan < ActiveRecord::Base
   end
 
   def calculate_npv
-    self.amount_payable + self.payments.pluck(:cash_flow).npv(self.calculate_discount_rate)
+    npv = self.amount_payable
+
+    discount_rate = self.calculate_discount_rate
+
+    self.payments.pluck(:cash_flow).each_with_index do |cash_flow, index|
+      npv = npv + (cash_flow / ((1 + discount_rate) ** (index + 1)))
+    end
+
+    npv
   end
 
   def profits
